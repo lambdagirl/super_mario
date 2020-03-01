@@ -411,9 +411,15 @@ function runAnimation(frameFunc) {
 
 async function runGame(plans, Display) {
     let lives = 3;
+    let livesSpan = document.getElementById('lives');
+    let levelSpan = document.getElementById('levels');
+    var gameStatus = document.getElementById('status');
+
     for (let level = 0; level < plans.length && lives >0;) {
+        livesSpan.textContent = lives;
+        levelSpan.textContent = level+1;
     console.log(`Level ${level+1}, lives:${lives}`)
-        let status = await runLevel(new Level(plans[level]),
+    let status = await runLevel(new Level(plans[level]),
                                 Display);
     if (status == "won") level++;
     else lives--;
@@ -421,6 +427,7 @@ async function runGame(plans, Display) {
   if(lives>0){
       console.log("You've won!")
   } else {
+      gameStatus.textContent = "Gameover!"
     console.log("Game over!");
 }
 }
