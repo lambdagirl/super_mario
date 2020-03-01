@@ -1,3 +1,4 @@
+
 const simpleLevelPlan = `
 ......................
 ..#................#..
@@ -180,7 +181,6 @@ DOMDisplay.prototype.syncState = function(state) {
   this.dom.appendChild(this.actorLayer);
   this.dom.className = `game ${state.status}`;
   this.scrollPlayerIntoView(state);
-  this.drawZoomActors(this.actorLayer);
 
 };
 
@@ -329,7 +329,7 @@ function trackKeys(keys) {
       window.removeEventListener("keyup", track);
     };
     return down;
-  }
+}
 
 const arrowKeys =
   trackKeys(["ArrowLeft", "ArrowRight", "ArrowUp", " "]);
@@ -363,26 +363,27 @@ function runAnimation(frameFunc) {
   //
   // The animation function, when state is "pausing", will set the state
   // to "no" and return false to stop the animation.
-function runLevel(level, Display) {
+  function runLevel(level, Display) {
     let display = new Display(document.body, level);
     let state = State.start(level);
     let ending = 1;
     let running = "yes";
 
-  return new Promise(resolve => {
-    function escHandler(event){
+    return new Promise(resolve => {
+      function escHandler(event) {
         if (event.key != "Escape") return;
         event.preventDefault();
         if (running == "no") {
-            running = "yes";
-            runAnimation(frame);
+          running = "yes";
+          runAnimation(frame);
         } else if (running == "yes") {
-            running = "pausing";
+          running = "pausing";
         } else {
-            running = "yes";
+          running = "yes";
         }
-    }
-    window.addEventListener("keydown", escHandler);
+      }
+      window.addEventListener("keydown", escHandler);
+      let arrowKeys = trackKeys(["ArrowLeft", "ArrowRight", "ArrowUp", " "]);
 
     function frame(time){
         if (running == "pausing"){
