@@ -305,7 +305,7 @@ Player.prototype.update = function(time, state, keys) {
   let movedY = pos.plus(new Vec(0, ySpeed * time));
   if (!state.level.touches(movedY, this.size, "wall")) {
     pos = movedY;
-  } else if (keys.ArrowUp && ySpeed > 0) {
+  } else if ((keys.ArrowUp || keys[" "]) && ySpeed > 0) {
 
     ySpeed = -jumpSpeed;
   } else {
@@ -332,7 +332,7 @@ function trackKeys(keys) {
   }
 
 const arrowKeys =
-  trackKeys(["ArrowLeft", "ArrowRight", "ArrowUp"]);
+  trackKeys(["ArrowLeft", "ArrowRight", "ArrowUp", " "]);
 
 function runAnimation(frameFunc) {
   let lastTime = null;
@@ -383,7 +383,6 @@ function runLevel(level, Display) {
         }
     }
     window.addEventListener("keydown", escHandler);
-      let arrowKeys = trackKeys(["ArrowLeft", "ArrowRight", "ArrowUp"]);
 
     function frame(time){
         if (running == "pausing"){
